@@ -1,0 +1,60 @@
+buildscript {
+    ext {
+        springBootVersion = '3.2.1'
+		springCloudVersion = '2023.0.0'
+		lombokVersion = '1.18.30'
+		openAPIVersion = '2.3.0'
+    }
+}
+
+
+plugins {
+	id 'java'
+	id 'eclipse'
+	id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+group = 'com.openapi.swagger'
+version = '0.0.1-SNAPSHOT'
+description = 'OpenApi Swagger'
+
+java {
+	sourceCompatibility = '17'
+	targetCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Dependancy management BOM
+	implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+	
+	implementation('org.springframework.boot:spring-boot-starter-web'){
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+	
+	// Log4J
+	implementation('org.springframework.boot:spring-boot-starter-log4j2')
+	
+
+	// lombok
+	compileOnly("org.projectlombok:lombok:${lombokVersion}")
+	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+	// OpenAPI Swagger
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${openAPIVersion}")
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test'){
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.named('wrapper'){
+	gradleVersion = 8.5
+}

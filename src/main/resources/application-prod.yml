@@ -1,0 +1,10 @@
+logging:
+  level:
+    root: INFO # entire application default debug level
+    com.swagger.openapi: INFO # package application debug level
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss}] [%t] [%F:%L] %-5level: %msg%n"
+
+#Spring:
+#  profiles:
+#    active: local
